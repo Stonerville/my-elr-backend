@@ -20,6 +20,7 @@ public class SimpleRead {
 
     public String getNameByPatientID(String id) {
         //Place your code here
+    		return "";
     }
 
     public List<String> getIDByPatientName(String name) {
