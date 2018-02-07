@@ -2,31 +2,44 @@ package assignment;
 
 import java.util.List;
 import java.util.ArrayList;
-import ca.uhn.fhir.model.dstu2.resource.Bundle;
-import ca.uhn.fhir.model.dstu2.resource.Patient;
-import ca.uhn.fhir.model.dstu2.resource.Bundle.Entry;
+
+import org.hl7.fhir.dstu3.model.Bundle;
+import org.hl7.fhir.dstu3.model.Patient;
+import org.hl7.fhir.dstu3.model.Bundle.BundleEntryComponent;
+
+import ca.uhn.fhir.context.FhirContext;
+import ca.uhn.fhir.rest.client.api.IGenericClient;
 
 /**
- *
+ * This class contains methods for reading resources from the FHIR server.
  */
 public class SimpleRead {
 
-    //This Connection object is the same as the one you implemented in the first FHIR task
-    private Connection connection = null;
+    IGenericClient client = null;
 
-    public SimpleRead(Connection connection) {
-        this.connection = connection;
+    public SimpleRead(String baseUrl) {
+        FhirContext ctx = FhirContext.forDstu3();
+        client = ctx.newRestfulGenericClient(baseUrl);
     }
 
+    /**
+     * Find the patient with the given ID and return the full name as a
+     * single string.
+     */
     public String getNameByPatientID(String id) {
+        // Hint, there is a method that will return the full name including
+        // prefix, first, last, and suffix
         //Place your code here
-    		return "";
     }
 
+    /**
+     * Find all the patients that have the provided name and return a list
+     * of the IDs for those patients.  The search should include matches
+     * where any part of the patient name (family, given, prefix, etc.)
+     * matches the method 'name' parameter.
+     */
     public List<String> getIDByPatientName(String name) {
-        List<String> answer = new ArrayList<String>();
         //Place your code here
-        return answer;
     }
 
 }

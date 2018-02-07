@@ -29,8 +29,7 @@ public class SimpleReadTest extends TestCase {
      */
     public void testConnection() {
         String serverBase = "http://fhirtest.uhn.ca/baseDstu2";
-        Connection conn = new Connection(serverBase);
-        SimpleRead reader = new SimpleRead(conn);
+        SimpleRead reader = new SimpleRead(serverBase);
         //do something with the reader to make sure it works...
         fail("no tests");
     }
