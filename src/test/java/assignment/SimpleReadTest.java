@@ -27,10 +27,13 @@ public class SimpleReadTest extends TestCase {
     /**
      * Rigourous Test :-)
      */
-    public void testConnection() {
-        String serverBase = "http://fhirtest.uhn.ca/baseDstu2";
+    public void testSimpleRead() {
+        String serverBase ="http://hapi.fhir.org/baseDstu3";
         SimpleRead reader = new SimpleRead(serverBase);
         //do something with the reader to make sure it works...
-        fail("no tests");
+        String patientID = "";//find a good patient
+        String expected_name = "";
+        String actual_name = reader.getNameByPatientID(patientID);
+        assertEquals(expected_name, actual_name);
     }
 }

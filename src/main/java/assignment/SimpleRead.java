@@ -30,6 +30,7 @@ public class SimpleRead {
         // Hint, there is a method that will return the full name including
         // prefix, first, last, and suffix
         //Place your code here
+        return "";//just so it will compile, return nothing
     }
 
     /**
@@ -40,6 +41,7 @@ public class SimpleRead {
      */
     public List<String> getIDByPatientName(String name) {
         //Place your code here
+        return new ArrayList<String>();//just so it will compile, return nothing
     }
 
 }
