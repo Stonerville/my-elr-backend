@@ -1,20 +1,10 @@
-// pipeline {
-//     agent { docker { image 'maven:3.3.3' } }
-//     stages {
-//         stage('build') {
-//             steps {
-//                 sh 'mvn clean install -U -f "/Users/Brian/Documents/workspace/dev/myPlayGround/my-elr-backend/pom.xml"'
-//             }
-//         }
-//     }
-// }
 pipeline {
-    agent {
+  agent {
         docker {
-            image 'maven:3.3.3'
-            args '-v /root/.m2:/root/.m2'
+        image 'maven:3.3.3'
+        args '-v /root/.m2:/root/.m2'
         }
-    }
+    }    
     stages {
         stage('Clone Repository') {
             steps {
