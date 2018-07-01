@@ -16,8 +16,14 @@ pipeline {
         }
     }
     stages {
+        stage('Clone Repository') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
+                checkout scm
                 sh 'mvn -B -DskipTests clean package'
             }
         }
