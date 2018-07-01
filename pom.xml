@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>elr.ws</groupId>
+	<artifactId>elrws</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>demo</name>
+	<description>Demo project for Spring Boot</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.3.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+        <dockerfile-maven.version>0.4.10</dockerfile-maven.version>
+        <docker.image.prefix>springio</docker.image.prefix>
+        <project.docker.repository>springio/${project.artifactId}</project.docker.repository>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+    <build>
+       <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- tag::plugin[] -->
+
+            <!-- <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.3</version>
+                <executions>
+                    <execution>
+                    <id>default</id>
+                    <goals>
+                        <goal>build</goal>
+                        <goal>push</goal>
+                    </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>spotify/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                        <artifactId>${project.artifactId}</artifactId>
+                        <version>${project.version}</version>
+                    </buildArgs>
+                </configuration>
+            </plugin>            -->
+
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.24.0</version>
+
+                <configuration>
+                    <noCache>true</noCache>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                        <name>${project.artifactId}</name>
+                        <alias>${project.artifactId}</alias>
+                        <build>
+                            <dockerFileDir>${project.basedir}</dockerFileDir>
+                            <from>openjdk:latest</from>
+                            <!-- <assembly>
+                                <descriptorRef>artifact-with-dependencies</descriptorRef>
+                            </assembly> -->
+                            <cmd>java -cp target/${project.build.finalName}.jar</cmd>
+                        </build>
+                        <run>
+                        <namingStrategy>alias</namingStrategy>
+                        <!-- <dependsOn>
+                        <container>mongo</container>
+                        </dependsOn> -->
+                        
+                        <!-- <links>
+                        <link>mongo</link>
+                        </links> -->
+                        <ports>
+                        <port>8888:8888</port>
+                        </ports>
+                        <log>
+                        <prefix>${project.artifactId}-</prefix>
+                        <date>default</date>
+                        <color>cyan</color>
+                        </log>
+                        </run>
+                    
+                    </image>
+                    </images>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                        <artifactId>${project.artifactId}</artifactId>
+                        <version>${project.version}</version>
+                    </buildArgs>
+                    </configuration>                
+                    <executions>
+                        <execution>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                            <goal>build</goal>
+                            <goal>start</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+
+                <!-- <configuration>
+                     <noCache>true</noCache>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <name>${project.artifactId}</name>
+                            <build>
+                                <dockerFile>Dockerfile</dockerFile>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                            </build>
+                        </image> 
+                    </images>
+                     <args>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                        <artifactId>${project.artifactId}</artifactId>
+                        <version>${project.version}</version>
+                   </args>
+               </configuration> -->
+            </plugin>
+            <!-- end::plugin[] -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
