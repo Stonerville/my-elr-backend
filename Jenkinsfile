@@ -1,20 +1,34 @@
 pipeline {
   agent {
         docker {
-        image 'maven:3.3.3'
-        args '-v /root/.m2:/root/.m2'
+            image 'maven:3.3.3'
+            args '-v /root/.m2:/root/.m2'
         }
     }    
     stages {
-        stage('Clone Repository') {
+        stage('check env') {
+            parallel {
+                stage('check mvn') {
+                steps {
+                    sh 'mvn -v'
+                }
+                }
+                stage('check java') {
+                steps {
+                    sh 'java -version'
+                }
+                }
+            }
+        }
+       stage('Clone Repository') {
             steps {
                 checkout scm
             }
         }
         stage('Build') {
             steps {
-                checkout scm
-                sh 'mvn -B -DskipTests clean package'
+                // sh 'mvn -B -DskipTests clean package'
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
             }
         }
         stage('Test') {

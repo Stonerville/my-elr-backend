@@ -59,13 +59,13 @@
                 <!-- <configuration>
                     <mainClass>your-main-class</mainClass>
                 </configuration> -->
-                <executions>
+                <!-- <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions> -->
              </plugin>
 
             <plugin>
