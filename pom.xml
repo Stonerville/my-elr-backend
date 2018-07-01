@@ -25,6 +25,7 @@
         <dockerfile-maven.version>0.4.10</dockerfile-maven.version>
         <docker.image.prefix>springio</docker.image.prefix>
         <project.docker.repository>springio/${project.artifactId}</project.docker.repository>
+        <start-class>elr.ws.elrws.DemoApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -55,32 +56,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <!-- tag::plugin[] -->
-
-            <!-- <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.4.3</version>
+                <!-- <configuration>
+                    <mainClass>your-main-class</mainClass>
+                </configuration> -->
                 <executions>
                     <execution>
-                    <id>default</id>
-                    <goals>
-                        <goal>build</goal>
-                        <goal>push</goal>
-                    </goals>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <repository>spotify/${project.artifactId}</repository>
-                    <tag>${project.version}</tag>
-                    <buildArgs>
-                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                        <artifactId>${project.artifactId}</artifactId>
-                        <version>${project.version}</version>
-                    </buildArgs>
-                </configuration>
-            </plugin>            -->
+             </plugin>
 
             <plugin>
                 <groupId>io.fabric8</groupId>
@@ -140,27 +126,6 @@
                             </goals>
                         </execution>
                     </executions>
-
-                <!-- <configuration>
-                     <noCache>true</noCache>
-                    <verbose>true</verbose>
-                    <images>
-                        <image>
-                            <name>${project.artifactId}</name>
-                            <build>
-                                <dockerFile>Dockerfile</dockerFile>
-                                <assembly>
-                                    <descriptorRef>artifact</descriptorRef>
-                                </assembly>
-                            </build>
-                        </image> 
-                    </images>
-                     <args>
-                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                        <artifactId>${project.artifactId}</artifactId>
-                        <version>${project.version}</version>
-                   </args>
-               </configuration> -->
             </plugin>
             <!-- end::plugin[] -->
 
