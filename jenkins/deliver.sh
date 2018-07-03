@@ -29,4 +29,4 @@ set +x
 echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
-java -jar /root/.m2/repository/elr/ws/elrws/0.0.1-SNAPSHOT/${ARTIFACTID}-${VERSION}.jar
+java -jar target/${ARTIFACTID}-${VERSION}.jar
