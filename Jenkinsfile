@@ -43,8 +43,9 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                sh 'chmod 0755 ./jenkins/deliver.sh'
-                sh 'bash ./jenkins/deliver.sh'
+                def shell_script = './jenkins/deliver.sh'
+                sh "chmod 0755 ${shell_script}"
+                sh "bash ${shell_script}"
             }
         }
     }
