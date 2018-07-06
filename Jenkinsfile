@@ -9,20 +9,27 @@ pipeline {
         stage('check env') {
             parallel {
                 stage('check mvn') {
-                steps {
-                    sh 'mvn -v'
-                }
+                    steps {
+                        sh 'mvn -v'
+                    }
                 }
                 stage('check java') {
-                steps {
-                    sh 'java -version'
-                }
+                    steps {
+                        sh 'java -version'
+                    }
                 }
             }
         }
        stage('Clone Repository') {
             steps {
                 checkout scm
+            }
+        }
+        stage('Code Review') {
+            steps {
+              withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=614f458c5df9963cb2d0ad3ff9c21073596dfe98'            }
+              }
             }
         }
         stage('Build') {
