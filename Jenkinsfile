@@ -28,9 +28,9 @@ pipeline {
         }
         stage('Code Review') {
             steps {
-              withSonarQubeEnv('My SonarQube Server') {
+            //   withSonarQubeEnv('My SonarQube Server') {
                 sh 'mvn sonar:sonar'
-                }
+                // }
             }
         }
         stage('Build') {
