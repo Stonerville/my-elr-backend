@@ -28,8 +28,8 @@ pipeline {
         stage('Code Review') {
             steps {
               withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=614f458c5df9963cb2d0ad3ff9c21073596dfe98'            }
-              }
+                sh 'mvn sonar:sonar'
+                }
             }
         }
         stage('Build') {
