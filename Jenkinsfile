@@ -1,5 +1,5 @@
 pipeline {
-                def shell_script = './jenkins/deliver.sh'
+                // def shell_script = './jenkins/deliver.sh'
  agent {
         docker {
             image 'maven:3.3.3'
@@ -51,8 +51,10 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-                 sh "chmod 0755 ${shell_script}"
-                sh "bash ${shell_script}"
+                //  sh "chmod 0755 ${shell_script}"
+                // sh "bash ${shell_script}"
+                 sh "chmod 0755 ./jenkins/deliver.sh"
+                sh "bash ./jenkins/deliver.sh"
             }
         }
     }
