@@ -29,7 +29,7 @@ pipeline {
         stage('Code Review') {
             steps {
             //   withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn  -Dsonar.login=614f458c5df9963cb2d0ad3ff9c21073596dfe98 sonar:sonar'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f2e27f6e56bfb72ae0298872ec7001dab112262d'
                 // }
             }
         }
@@ -49,13 +49,13 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
-            steps {
-                //  sh "chmod 0755 ${shell_script}"
-                // sh "bash ${shell_script}"
-                 sh "chmod 0755 ./jenkins/deliver.sh"
-                sh "bash ./jenkins/deliver.sh"
-            }
-        }
+        // stage('Deliver') {
+        //     steps {
+        //         //  sh "chmod 0755 ${shell_script}"
+        //         // sh "bash ${shell_script}"
+        //          sh "chmod 0755 ./jenkins/deliver.sh"
+        //         sh "bash ./jenkins/deliver.sh"
+        //     }
+        // }
     }
 }
