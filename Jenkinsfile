@@ -45,7 +45,7 @@ pipeline {
         stage('Code Review') {
             steps {
             //   withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn sonar:sonar'// -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f2e27f6e56bfb72ae0298872ec7001dab112262d'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=f2e27f6e56bfb72ae0298872ec7001dab112262d'
                 // }
             }
         }
