@@ -26,6 +26,7 @@
         <docker.image.prefix>springio</docker.image.prefix>
         <project.docker.repository>springio/${project.artifactId}</project.docker.repository>
         <start-class>elr.ws.elrws.DemoApplication</start-class>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
 	</properties>
 
 	<dependencies>
