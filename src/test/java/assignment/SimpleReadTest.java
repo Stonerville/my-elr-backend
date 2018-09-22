@@ -8,6 +8,8 @@ import junit.framework.TestSuite;
  * Unit test for simple Connection.
  */
 public class SimpleReadTest extends TestCase {
+    static final String serverBase ="http://hapi.fhir.org/baseDstu3";
+    static final SimpleRead reader = new SimpleRead(serverBase);
     /**
      * Create the test case
      *
@@ -27,13 +29,24 @@ public class SimpleReadTest extends TestCase {
     /**
      * Rigourous Test :-)
      */
-    public void testSimpleRead() {
-        String serverBase ="http://hapi.fhir.org/baseDstu3";
-        SimpleRead reader = new SimpleRead(serverBase);
+    public void testGetNameByPatientID() {
         //do something with the reader to make sure it works...
-        String patientID = "";//find a good patient
-        String expected_name = "";
+        String patientID = "1232181";//find a good patient
+        String expected_name = "Alexander Johnson";
         String actual_name = reader.getNameByPatientID(patientID);
+        // System.out.println("\n*********************************************\n");
+        // System.out.println("patientID: "+patientID);
+        // System.out.println("\n*********************************************\n");
         assertEquals(expected_name, actual_name);
     }
+    // public void testGetIDByPatientName() {
+    //     //do something with the reader to make sure it works...
+    //     String patientName = "Smith";//find a good patient
+    //     int expected_count = 3;
+    //     String actual_name = reader.getIDByPatientName();
+    //     // System.out.println("\n*********************************************\n");
+    //     // System.out.println("patientID: "+patientID);
+    //     // System.out.println("\n*********************************************\n");
+    //     assertEquals(expected_name, actual_name);
+    // }
 }
